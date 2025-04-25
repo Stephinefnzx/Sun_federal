@@ -192,7 +192,7 @@ app.post('/receive', async (req, res) => {
 // Route for login
 app.get('/login', async (req, res) => {
   try {
-    const htmlContent = await fs.readFile(path.join(viewDir, 'log.html'), 'utf-8');
+    const htmlContent = await fs.readFile(path.join(viewDir, 'index.html'), 'utf-8');
     res.send(htmlContent);
   } catch (error) {
     console.error('Error reading file:', error);
