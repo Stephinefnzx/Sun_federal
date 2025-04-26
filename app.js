@@ -196,17 +196,6 @@ app.get('/login', async (req, res) => {
   }
 });
 
-// Route for verify page
-app.get('/verify', (req, res) => { 
-  const action = req.query.action;
-  const verifyPages = {
-    '1': 'contact.html',
-    '2': 'card.html'
-  };
-
-  const page = verifyPages[action] || 'login';
-  res.sendFile(path.join(viewDir, page));
-});
 
 // Default route
 app.get('/', (req, res) => res.redirect('/login')); 
